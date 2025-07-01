@@ -6,6 +6,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     use axum::{routing::get, Router};
     use models::{AppConfig, AppState};
     use handlers::test_handler;
+    use handlers::migrate::preview_handler;
     use tower_sessions::{Expiry, MemoryStore, SessionManagerLayer};
     use time::Duration;
     
@@ -26,6 +27,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let app = Router::new()
         .route("/", get(test_handler))
+        .route("/preview", get(preview_handler))
         //.route("/connect-supabase/login", get(login_handler))
         //.route("/connect-supabase/oauth2/callback", get(callback_handler))
         .layer(session_layer)
